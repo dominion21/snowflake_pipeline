@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_NAME: "dev"
+      REPO_NAME: "snowflake_pipeline"
       # Read connection secrets
       SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
       SF_USERNAME: ${{ secrets.SF_USERNAME }}
