@@ -1,6 +1,6 @@
 name: snowflake-devops-demo
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   push:
     branches:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -23,6 +23,18 @@ jobs:
         uses: actions/setup-python@v2.2.1
         with:
           python-version: 3.8.x
+
+      - name: Set environment variables
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            export SF_ACCOUNT=$PROD_SF_ACCOUNT
+            export SF_USERNAME=$PROD_SF_USERNAME
+            # Add other production secrets here
+          else
+            export SF_ACCOUNT=$DEV_SF_ACCOUNT
+            export SF_USERNAME=$DEV_SF_USERNAME
+            # Add other dev secrets here
+          fi
 
       - name: Run schemachange
         env:
@@ -37,6 +49,6 @@ jobs:
           python --version
           echo "Step 1: Installing schemachange"
           pip install schemachange
-          
+
           echo "Step 2: Running schemachange"
           schemachange -f $GITHUB_WORKSPACE/ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SCHEMACHANGE.CHANGE_HISTORY --create-change-history-table
