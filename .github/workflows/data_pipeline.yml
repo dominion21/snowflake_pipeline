@@ -29,10 +29,18 @@ jobs:
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             export SF_ACCOUNT=$PROD_SF_ACCOUNT
             export SF_USERNAME=$PROD_SF_USERNAME
+            export SF_ROLE=$PROD_SF_ROLE
+            export SF_WAREHOUSE=$PROD_SF_WAREHOUSE 
+            export SF_DATABASE=$PROD_SF_DATABASE 
+            export SNOWFLAKE_PASSWORD=$PROD_SF_PASSWORD 
             # Add other production secrets here
           else
             export SF_ACCOUNT=$DEV_SF_ACCOUNT
             export SF_USERNAME=$DEV_SF_USERNAME
+            export SF_ROLE=$DEV_SF_ROLE
+            export SF_WAREHOUSE=$DEV_SF_WAREHOUSE 
+            export SF_DATABASE=$DEV_SF_DATABASE 
+            export SNOWFLAKE_PASSWORD=$DEV_SF_PASSWORD 
             # Add other dev secrets here
           fi
 
